@@ -1,0 +1,11 @@
+{
+  "name": "parse-strings-in-object",
+  "version": "1.0.0",
+  "description": "Convert string values in object to boolean and numbers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Buchanan",
+  "license": "ISC"
+}
