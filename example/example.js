@@ -1,7 +1,16 @@
 let before = {
-    active: 'true',
-    number: '2',
-    anotherNumber: '3.17',
+    topLevel: true,
+    topNumber: 1,
+    foo: {
+        active: 'true',
+        number: '2',
+        anotherNumber: '3.17',
+    },
+    bar: {
+        active: false,
+        number: '10',
+        aString: 'yo'
+    },
     justAString: 'hello',
     ipAddress: '192.168.1.101'
 }
@@ -9,4 +18,4 @@ let before = {
 let after = require('parse-strings-in-object')(before);
 
 console.log('before:', before);
-console.log('after:', after);
+console.log('after:\n', JSON.stringify(after, null, 4));
