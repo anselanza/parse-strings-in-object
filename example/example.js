@@ -3,7 +3,7 @@ let before = {
     topNumber: 1,
     foo: {
         active: 'true',
-        number: '2',
+        number: '0',
         anotherNumber: '3.17',
     },
     bar: {
