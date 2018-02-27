@@ -20,7 +20,7 @@ let before = {
     ipAddress: '192.168.1.101'
 }
 
-let after = require('parse-strings-in-object')(before);
+let after = require('../lib/index.js')(before);
 
 console.log('before:', before);
 console.log('after:\n', JSON.stringify(after, null, 4));
