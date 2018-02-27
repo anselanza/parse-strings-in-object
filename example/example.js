@@ -6,4 +6,5 @@ let before = {
 
 let after = require('parse-strings-in-object')(before);
 
-console.log(after);
+console.log('before:', before);
+console.log('after:', after);
