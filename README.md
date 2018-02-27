@@ -51,3 +51,11 @@ The output will be:
     "ipAddress": "192.168.1.101"
 }
 ```
+
+## Development and testing
+Feel free to improve the module! All pull requests shall be considered.
+
+After `npm install` you can run unit tests with Mocha like this:
+```
+npm run test
+```
