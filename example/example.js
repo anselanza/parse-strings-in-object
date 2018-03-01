@@ -17,7 +17,18 @@ let before = {
         }
     },
     justAString: 'hello',
-    ipAddress: '192.168.1.101'
+    ipAddress: '192.168.1.101',
+    listOfNumbers: ['0', '1', '2'],
+    listOfObjects: [
+        {
+            id: 0,
+            value: 'hello'
+        },
+        {
+            id: 1,
+            value: 'world'
+        }        
+    ]
 }
 
 let after = require('../lib/index.js')(before);
