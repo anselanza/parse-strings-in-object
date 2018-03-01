@@ -1,6 +1,6 @@
 {
   "name": "parse-strings-in-object",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Convert string values in object to boolean and numbers",
   "repository": "https://github.com/anselanza/parse-strings-in-object",
   "main": "lib/index.js",
