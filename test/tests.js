@@ -16,7 +16,8 @@ describe('Parsing', () => {
     it('should retain arrays properly', () => {
         const before = { foo: 'true', list: ['one', 'two', 'three']};
         const result = parser(before);
-        expect(result).to.equal({ foo: true, list: ['one', 'two', 'three']});
+        expect(result).to.deep.equal({ foo: true, list: ['one', 'two', 'three']});
+        expect(result.list.length).to.equal(3);
     });
 
     // it('should retain array of objects properly', () => {
