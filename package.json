@@ -5,7 +5,7 @@
   "repository": "https://github.com/anselanza/parse-strings-in-object",
   "main": "lib/index.js",
   "scripts": {
-    "test": "npx mocha test/tests.js"
+    "test": "npx mocha test/tests.js --watch"
   },
   "author": "Stephen Buchanan",
   "license": "ISC",
