@@ -55,51 +55,55 @@ describe('Parsing', () => {
     });
 
 
-    // it ('should parse a nested structure properly', () => {
-    //     const before = {
-    //         topLevel: true,
-    //         topNumber: 1,
-    //         foo: {
-    //             active: 'true',
-    //             number: '0',
-    //             anotherNumber: '3.17',
-    //         },
-    //         bar: {
-    //             active: 'false',
-    //             number: '10',
-    //             aString: 'yo',
-    //             subSub: {
-    //                 thisIsTrue: 'true',
-    //                 thisIsFalse: 'false',
-    //                 thisIsNumber: '0.00006'
-    //             }
-    //         },
-    //         justAString: 'hello',
-    //         ipAddress: '192.168.1.101'
-    //     }
-    //     const result = parser(before);
-    //     const expected = {
-    //         topLevel: true,
-    //         topNumber: 1,
-    //         foo: {
-    //             active: true,
-    //             number: 0,
-    //             anotherNumber: 3.17,
-    //         },
-    //         bar: {
-    //             active: false,
-    //             number: 10,
-    //             aString: 'yo',
-    //             subSub: {
-    //                 thisIsTrue: true,
-    //                 thisIsFalse: false,
-    //                 thisIsNumber: 0.00006
-    //             }
-    //         },
-    //         justAString: 'hello',
-    //         ipAddress: '192.168.1.101'
-    //     }
-    //     expect(result).to.equal(expected);
-
-    // });
+    it ('should parse a nested structure properly', () => {
+        const before = {
+            topLevel: true,
+            topNumber: 1,
+            foo: {
+                active: 'true',
+                number: '0',
+                anotherNumber: '3.17',
+            },
+            bar: {
+                active: 'false',
+                number: '10',
+                aString: 'yo',
+                subSub: {
+                    thisIsTrue: 'true',
+                    thisIsFalse: 'false',
+                    thisIsNumber: '0.00006'
+                }
+            },
+            justAString: 'hello',
+            ipAddress: '192.168.1.101'
+        }
+        const result = parser(before);
+        const expected = {
+            topLevel: true,
+            topNumber: 1,
+            foo: {
+                active: true,
+                number: 0,
+                anotherNumber: 3.17,
+            },
+            bar: {
+                active: false,
+                number: 10,
+                aString: 'yo',
+                subSub: {
+                    thisIsTrue: true,
+                    thisIsFalse: false,
+                    thisIsNumber: 0.00006
+                }
+            },
+            justAString: 'hello',
+            ipAddress: '192.168.1.101'
+        }
+        expect(result).to.deep.equal(expected);
+        expect(result.topLevel).to.equal(true);
+        expect(result.foo.active).to.equal(true);
+        expect(result.ipAddress).to.equal('192.168.1.101');
+        expect(result.bar.subSub.thisIsFalse).to.equal(false);
+        expect(result.bar.subSub.thisIsNumber).to.equal(0.00006);
+    });
 });
