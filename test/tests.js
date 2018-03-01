@@ -20,36 +20,39 @@ describe('Parsing', () => {
         expect(result.list.length).to.equal(3);
     });
 
-    // it('should retain array of objects properly', () => {
-    //     const before = { 
-    //         someObjs: [
-    //             {
-    //                 id: 0,
-    //                 value: 'hello'
-    //             },
-    //             {
-    //                 id: 1,
-    //                 value: 'world'
-    //             }
-    //         ]
-    //     };
-    //     const result = parser(before);
-    //     expect(result).to.be(
-    //         { 
-    //             foo: 'true', 
-    //             someObjs: [
-    //                 {
-    //                     id: 0,
-    //                     value: 'hello'
-    //                 },
-    //                 {
-    //                     id: 1,
-    //                     value: 'world'
-    //                 }
-    //             ]
-    //         }
-    //     );
-    // });
+    it('should retain array of objects properly', () => {
+        const before = { 
+            foo: 'true',
+            someObjs: [
+                {
+                    id: 0,
+                    value: 'hello'
+                },
+                {
+                    id: 1,
+                    value: 'world'
+                }
+            ]
+        };
+        const result = parser(before);
+        expect(result).to.deep.equal(
+            { 
+                foo: true, 
+                someObjs: [
+                    {
+                        id: 0,
+                        value: 'hello'
+                    },
+                    {
+                        id: 1,
+                        value: 'world'
+                    }
+                ]
+            }
+        );
+        expect(result.foo).to.equal(true);
+        expect(result.someObjs.length).to.equal(2);
+    });
 
 
     // it ('should parse a nested structure properly', () => {
