@@ -20,6 +20,15 @@ describe('Parsing', () => {
         expect(result.list.length).to.equal(3);
     });
 
+    it('should convert strings-as-numbers into real numbers', () => {
+        const before = { aNumber: '1', another: '0', andAnother: '42' };
+        const result = parser(before);
+        expect(result.aNumber).to.equal(1);
+        expect(typeof result.aNumber).to.equal('number');
+        expect(typeof result.another).to.equal('number');
+        expect(typeof result.andAnother).to.equal('number');
+    });
+
     it('should retain array of objects properly', () => {
         const before = { 
             foo: 'true',
