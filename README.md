@@ -30,28 +30,32 @@ var niceParsedObject = require('parse-strings-in-object')(yourOriginalObject)
 
 ## Example
 ```
-let before = {
-    topLevel: true,
-    topNumber: 1,
+const before = {
+    active: true,
+    anInt: 1,
+    aFloat: 1.1,
     justAString: 'hello',
     ipAddress: '192.168.1.101'
 }
 
-let after = require('parse-strings-in-object')(before);
-
-console.log('before:', before);
-console.log('after:', JSON.stringify(after, null, 4));
+let after = require("parse-strings-in-object")(before);
+console.log(JSON.stringify(after, null, 4), typeof after.aFloat, 'and also a', typeof after.anInt);
 ```
 
 The output will be:
 ```
 {
-    "topLevel": true,
-    "topNumber": 1,
-    "justAString": "hello",
-    "ipAddress": "192.168.1.101"
+    active: true,
+    anInt: 1,
+    aFloat: 1.1,
+    justAString: 'hello',
+    ipAddress: '192.168.1.101'
 }
+number
+and also a
+number
 ```
+Notice that both ints and floats are converted correctly to the single `number` type, and a number-like string such as an IP address is left alone (stays a string).
 
 ## Development and testing
 Feel free to improve the module! All pull requests shall be considered.
