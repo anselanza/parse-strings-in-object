@@ -8,9 +8,10 @@ myNumber: '0'
 So, now:
 ```
 console.log(isMaster); // "true": as expected, but actually string
-console.log(isMaster===true, isMaster===true); // "false false": oops
+console.log(isMaster==true, isMaster===true); // "false false": oops
 console.log(myNumber); // "0": as expected, but actually a string
-console.log(!myNumber); // "true": because... JS
+console.log(typeof myNumber, myNumber==0, myNumber===0); // "string true false": hmmm
+console.log(!myNumber); // "true": this is getting confusing
 ```
 
 This simple module reads your JS Object recursively and converts string values to their proper types.
