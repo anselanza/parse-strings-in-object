@@ -13,8 +13,16 @@ describe('Parsing', () => {
         expect(result.bar).to.equal(false);
     });
 
-    it('should retain null values without errors', () => {
+    it('should retain actual null values without errors', () => {
         const before = { foo: 'true', bar: null };
+        const result = parser(before);
+        // expect(result).to.equal({ foo: true, bar: false });
+        expect(result.foo).to.equal(true);
+        expect(result.bar).to.equal(null);
+    });
+
+    it ('should convert strings-as-nulls into real nulls', () => {
+        const before = { foo: 'true', bar: 'null' };
         const result = parser(before);
         // expect(result).to.equal({ foo: true, bar: false });
         expect(result.foo).to.equal(true);
