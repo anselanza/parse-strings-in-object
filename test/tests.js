@@ -101,7 +101,8 @@ describe('Parsing', () => {
                 }
             },
             justAString: 'hello',
-            ipAddress: '192.168.1.101'
+            ipAddress: '192.168.1.101',
+            alsoNull: 'null'
         }
         const result = parser(before);
         const expected = {
@@ -124,7 +125,8 @@ describe('Parsing', () => {
                 }
             },
             justAString: 'hello',
-            ipAddress: '192.168.1.101'
+            ipAddress: '192.168.1.101',
+            alsoNull: null
         }
         expect(result).to.deep.equal(expected);
         expect(result.topLevel).to.equal(true);

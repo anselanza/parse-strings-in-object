@@ -1,12 +1,13 @@
 # Parse Strings in JS Object
 
 ## Overview
-A very simple module that takes a JavaScript object and returns a new object with *string representations of booleans and numbers* converted to their proper types.
+A very simple module that takes a JavaScript object and returns a new object with *string representations of booleans, nulls and numbers* converted to their proper types.
 
 So:
  * `'true'` and `'false'` becomes `true` and `false`
  * `'1'` and `'3.147'` become `1` and `3.147`
  * `'192.168.1.1'` is left alone even though it "looks" like a number
+ * `'null'` becomes `null`
 
 It works recursively, so nested structures are no problem.
 
