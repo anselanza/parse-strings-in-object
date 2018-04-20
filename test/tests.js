@@ -21,12 +21,21 @@ describe('Parsing', () => {
         expect(result.bar).to.equal(null);
     });
 
-    it ('should convert strings-as-nulls into real nulls', () => {
+    it('should convert string representations of nulls into real nulls', () => {
         const before = { foo: 'true', bar: 'null' };
         const result = parser(before);
         // expect(result).to.equal({ foo: true, bar: false });
         expect(result.foo).to.equal(true);
         expect(result.bar).to.equal(null);
+    });
+
+    it('should retain actual undefined values without errors', () => {
+        const before = { foo: 'true', bar: undefined };
+        const result = parser(before);
+        // expect(result).to.equal({ foo: true, bar: false });
+        expect(result.foo).to.equal(true);
+        expect(result.bar).to.equal(undefined);
+        expect(result.bar).to.be
     });
 
     it('should retain arrays properly', () => {
@@ -36,7 +45,7 @@ describe('Parsing', () => {
         expect(result.list.length).to.equal(3);
     });
 
-    it('should convert strings-as-numbers into real numbers', () => {
+    it('should convert string representations of numbers into real numbers', () => {
         const before = { aNumber: '1', another: '0', andAnother: '42' };
         const result = parser(before);
         expect(result.aNumber).to.equal(1);
