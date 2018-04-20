@@ -38,6 +38,15 @@ describe('Parsing', () => {
         expect(result.bar).to.be
     });
 
+    // it('should convert string representations of undefineds into real undefineds', () => {
+    //     const before = { foo: 'true', bar: 'undefined' };
+    //     const result = parser(before);
+    //     // expect(result).to.equal({ foo: true, bar: false });
+    //     expect(result.foo).to.equal(true);
+    //     expect(result.bar).to.equal(undefined);
+    //     expect(result.bar).to.be
+    // });
+
     it('should retain arrays properly', () => {
         const before = { foo: 'true', list: ['one', 'two', 'three']};
         const result = parser(before);
