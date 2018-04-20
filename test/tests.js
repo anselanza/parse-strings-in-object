@@ -13,6 +13,14 @@ describe('Parsing', () => {
         expect(result.bar).to.equal(false);
     });
 
+    it('should retain null values without errors', () => {
+        const before = { foo: 'true', bar: null };
+        const result = parser(before);
+        // expect(result).to.equal({ foo: true, bar: false });
+        expect(result.foo).to.equal(true);
+        expect(result.bar).to.equal(null);
+    });
+
     it('should retain arrays properly', () => {
         const before = { foo: 'true', list: ['one', 'two', 'three']};
         const result = parser(before);
