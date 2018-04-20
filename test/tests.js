@@ -85,6 +85,7 @@ describe('Parsing', () => {
                 active: 'false',
                 number: '10',
                 aString: 'yo',
+                somethingNull: null,
                 subSub: {
                     thisIsTrue: 'true',
                     thisIsFalse: 'false',
@@ -107,6 +108,7 @@ describe('Parsing', () => {
                 active: false,
                 number: 10,
                 aString: 'yo',
+                somethingNull: null,
                 subSub: {
                     thisIsTrue: true,
                     thisIsFalse: false,
