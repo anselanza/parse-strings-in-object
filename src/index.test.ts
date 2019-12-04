@@ -52,6 +52,15 @@ test("convert string representations of numbers into real numbers", () => {
   expect(typeof result.andAnother).toBe("number");
 });
 
+test("IP addresses should stay as strings though they look like numbers", () => {
+  const before = { aNumber: "192.168", address: "192.168.1.100" };
+  const result = parser(before) as typeof before;
+  expect(result.aNumber).toBe(192.168);
+  expect(typeof result.aNumber).toBe("number");
+  expect(result.address).toBe("192.168.1.100");
+  expect(typeof result.address).toBe("string");
+});
+
 test("convert arrays of string representations of numbers into array of numbers", () => {
   const before = { foo: "true", list: ["1", "2", "3"] };
   const result = parser(before) as typeof before;
