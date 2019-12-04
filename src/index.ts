@@ -1,13 +1,11 @@
-import { parse } from "@babel/parser";
-
-const parseKeys = (obj: object): object =>
+const parseKeys = <T>(obj: object): T =>
   Object.keys(obj).reduce((acc, key) => {
     const value = obj[key];
 
     const result = convert(value);
 
     return { ...acc, [key]: result };
-  }, {});
+  }, {}) as T;
 
 const convert = (value: string | any[]): any => {
   let result: any = value;
