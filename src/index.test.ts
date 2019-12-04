@@ -97,3 +97,62 @@ test("convert array of objects with string representations of numbers", () => {
   expect(result.foo).toEqual(true);
   expect(result.someObjs).toHaveLength(2);
 });
+
+test("parse a nested structure properly", () => {
+  const before = {
+    topLevel: true,
+    topNumber: 1,
+    foo: {
+      active: "true",
+      number: "0",
+      anotherNumber: "3.17"
+    },
+    bar: {
+      active: "false",
+      number: "10",
+      aString: "yo",
+      somethingNull: null,
+      subSub: {
+        thisIsTrue: "true",
+        thisIsFalse: "false",
+        thisIsNumber: "0.00006"
+      }
+    },
+    justAString: "hello",
+    ipAddress: "192.168.1.101",
+    alsoNull: "null"
+  };
+
+  const result = parser(before) as typeof before;
+
+  const expected = {
+    topLevel: true,
+    topNumber: 1,
+    foo: {
+      active: true,
+      number: 0,
+      anotherNumber: 3.17
+    },
+    bar: {
+      active: false,
+      number: 10,
+      aString: "yo",
+      somethingNull: null,
+      subSub: {
+        thisIsTrue: true,
+        thisIsFalse: false,
+        thisIsNumber: 0.00006
+      }
+    },
+    justAString: "hello",
+    ipAddress: "192.168.1.101",
+    alsoNull: null
+  };
+
+  expect(result).toEqual(expected);
+  expect(result.topLevel).toEqual(true);
+  expect(result.foo.active).toEqual(true);
+  expect(result.ipAddress).toEqual("192.168.1.101");
+  expect(result.bar.subSub.thisIsFalse).toEqual(false);
+  expect(result.bar.subSub.thisIsNumber).toEqual(0.00006);
+});
