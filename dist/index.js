@@ -1,21 +1,17 @@
 "use strict";
 const parseKeys = (obj) => Object.keys(obj).reduce((acc, key) => {
     const value = obj[key];
+    const result = convert(value);
+    return Object.assign(Object.assign({}, acc), { [key]: result });
+}, {});
+const convert = (value) => {
     let result = value;
     if (typeof value === "object" && value !== null) {
-        // typeof(null) is also "object"
-        // typeof (array) is also "object"
         if (Array.isArray(value)) {
-            if (value.length > 0) {
-                result = "boo";
-                // result = value.reduce((arr, el) => [...arr, parseKeys(el)], []);
-            }
-            else {
-                result = value;
-            }
+            return convertArray(value);
         }
         else {
-            result = parseKeys(value);
+            return parseKeys(value);
         }
     }
     if (value === "true") {
@@ -30,10 +26,12 @@ const parseKeys = (obj) => Object.keys(obj).reduce((acc, key) => {
     if (value === "undefined") {
         result = undefined;
     }
-    if (!isNaN(parseFloat(value)) && value === parseFloat(value).toString()) {
+    if (!isNaN(parseFloat(value)) &&
+        value === parseFloat(value).toString()) {
         result = parseFloat(value);
     }
-    return Object.assign(Object.assign({}, acc), { [key]: result });
-}, {});
+    return result;
+};
+const convertArray = (a) => a.map(el => convert(el));
 module.exports = parseKeys;
 //# sourceMappingURL=index.js.map

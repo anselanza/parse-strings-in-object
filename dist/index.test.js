@@ -50,16 +50,110 @@ test("convert string representations of numbers into real numbers", () => {
     expect(typeof result.another).toBe("number");
     expect(typeof result.andAnother).toBe("number");
 });
+test("IP addresses should stay as strings though they look like numbers", () => {
+    const before = { aNumber: "192.168", address: "192.168.1.100" };
+    const result = _1.default(before);
+    expect(result.aNumber).toBe(192.168);
+    expect(typeof result.aNumber).toBe("number");
+    expect(result.address).toBe("192.168.1.100");
+    expect(typeof result.address).toBe("string");
+});
 test("convert arrays of string representations of numbers into array of numbers", () => {
     const before = { foo: "true", list: ["1", "2", "3"] };
     const result = _1.default(before);
     expect(result).toEqual({ foo: true, list: [1, 2, 3] });
-    // expect(result.list.length).to.equal(3);
+    expect(result.list).toHaveLength(3);
 });
 test("retain arrays of strings properly", () => {
     const before = { foo: "true", list: ["one", "two", "three"] };
     const result = _1.default(before);
     expect(result).toEqual({ foo: true, list: ["one", "two", "three"] });
     expect(result.list).toHaveLength(3);
+});
+test("convert array of objects with string representations of numbers", () => {
+    const before = {
+        foo: "true",
+        someObjs: [
+            {
+                id: "0",
+                value: "hello"
+            },
+            {
+                id: "1",
+                value: "world"
+            }
+        ]
+    };
+    const result = _1.default(before);
+    expect(result).toEqual({
+        foo: true,
+        someObjs: [
+            {
+                id: 0,
+                value: "hello"
+            },
+            {
+                id: 1,
+                value: "world"
+            }
+        ]
+    });
+    expect(result.foo).toEqual(true);
+    expect(result.someObjs).toHaveLength(2);
+});
+test("parse a nested structure properly", () => {
+    const before = {
+        topLevel: true,
+        topNumber: 1,
+        foo: {
+            active: "true",
+            number: "0",
+            anotherNumber: "3.17"
+        },
+        bar: {
+            active: "false",
+            number: "10",
+            aString: "yo",
+            somethingNull: null,
+            subSub: {
+                thisIsTrue: "true",
+                thisIsFalse: "false",
+                thisIsNumber: "0.00006"
+            }
+        },
+        justAString: "hello",
+        ipAddress: "192.168.1.101",
+        alsoNull: "null"
+    };
+    const result = _1.default(before);
+    const expected = {
+        topLevel: true,
+        topNumber: 1,
+        foo: {
+            active: true,
+            number: 0,
+            anotherNumber: 3.17
+        },
+        bar: {
+            active: false,
+            number: 10,
+            aString: "yo",
+            somethingNull: null,
+            subSub: {
+                thisIsTrue: true,
+                thisIsFalse: false,
+                thisIsNumber: 0.00006
+            }
+        },
+        justAString: "hello",
+        ipAddress: "192.168.1.101",
+        alsoNull: null
+    };
+    expect(result).toEqual(expected);
+    expect(result.topLevel).toEqual(true);
+    expect(result.foo.active).toEqual(true);
+    expect(result.ipAddress).toEqual("192.168.1.101");
+    expect(result.bar.subSub.thisIsFalse).toEqual(false);
+    expect(result.bar.subSub.thisIsNumber).toEqual(0.00006);
 });
 //# sourceMappingURL=index.test.js.map

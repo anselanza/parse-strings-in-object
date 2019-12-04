@@ -12,7 +12,7 @@
     "objects"
   ],
   "repository": "https://github.com/anselanza/parse-strings-in-object",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "npx tsc",

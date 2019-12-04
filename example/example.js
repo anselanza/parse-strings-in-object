@@ -1,37 +1,17 @@
-let before = {
-    topLevel: true,
-    topNumber: 1,
-    foo: {
-        active: 'true',
-        number: '0',
-        anotherNumber: '3.17',
-    },
-    bar: {
-        active: 'false',
-        number: '10',
-        aString: 'yo',
-        subSub: {
-            thisIsTrue: 'true',
-            thisIsFalse: 'false',
-            thisIsNumber: '0.00006'
-        }
-    },
-    justAString: 'hello',
-    ipAddress: '192.168.1.101',
-    listOfNumbers: ['0', '1', '2'],
-    listOfObjects: [
-        {
-            id: 0,
-            value: 'hello'
-        },
-        {
-            id: 1,
-            value: 'world'
-        }        
-    ]
-}
-
-let after = require('../lib/index.js')(before);
-
-console.log('before:', before);
-console.log('after:\n', JSON.stringify(after, null, 4));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+exports.__esModule = true;
+var dist_1 = __importDefault(require("../dist"));
+var input = {
+    aNumber: "1.0",
+    aString: "hello"
+};
+var expectedResult = {
+    aNumber: 1.0,
+    aString: "hello"
+};
+var result = dist_1["default"](input);
+console.log("input:", input);
+console.log("result:", result);
