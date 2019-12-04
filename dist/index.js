@@ -1,27 +1,39 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
+const parseKeys = (obj) => Object.keys(obj).reduce((acc, key) => {
+    const value = obj[key];
+    let result = value;
+    if (typeof value === "object" && value !== null) {
+        // typeof(null) is also "object"
+        // typeof (array) is also "object"
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                result = "boo";
+                // result = value.reduce((arr, el) => [...arr, parseKeys(el)], []);
+            }
+            else {
+                result = value;
+            }
         }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var parseKeys = function (obj) {
-    return Object.keys(obj).reduce(function (acc, key) {
-        var _a, _b, _c;
-        var value = obj[key];
-        if (value === "true") {
-            return __assign(__assign({}, acc), (_a = {}, _a[key] = true, _a));
+        else {
+            result = parseKeys(value);
         }
-        if (value === "false") {
-            return __assign(__assign({}, acc), (_b = {}, _b[key] = false, _b));
-        }
-        return __assign(__assign({}, acc), (_c = {}, _c[key] = value, _c));
-    }, {});
-};
+    }
+    if (value === "true") {
+        result = true;
+    }
+    if (value === "false") {
+        result = false;
+    }
+    if (value === "null") {
+        result = null;
+    }
+    if (value === "undefined") {
+        result = undefined;
+    }
+    if (!isNaN(parseFloat(value)) && value === parseFloat(value).toString()) {
+        result = parseFloat(value);
+    }
+    return Object.assign(Object.assign({}, acc), { [key]: result });
+}, {});
 module.exports = parseKeys;
 //# sourceMappingURL=index.js.map

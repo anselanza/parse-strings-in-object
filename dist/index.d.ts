@@ -1,2 +1,2 @@
-declare const parseKeys: object;
+declare const parseKeys: (obj: object) => object;
 export = parseKeys;

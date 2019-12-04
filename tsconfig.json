@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es5",
+    "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
@@ -10,5 +10,5 @@
   },
   "include": ["src/**/*"],
   "exclude": [],
-  "lib": ["es5"]
+  "lib": ["es2015"]
 }
