@@ -173,7 +173,7 @@ describe("convert string representations of an arrays into real arrays", () => {
     expect(Array.isArray(result.list)).toBeTruthy();
     expect(typeof result.list).toBe("object");
     expect(result).toEqual({ list: ["test", "one", "two", "three"]})
-  })
+  });
 
   test("array of numnbers", () => {
     const before = { list: "0,1,2,4,8" };
@@ -181,5 +181,6 @@ describe("convert string representations of an arrays into real arrays", () => {
     expect(Array.isArray(result.list)).toBeTruthy();
     expect(typeof result.list).toBe("object");
     expect(result).toEqual({ list: [0,1,2,4,8]})
-  })
+  });
+  
 })
