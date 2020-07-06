@@ -4,12 +4,16 @@
 A very simple module that takes a JavaScript object and returns a new object with *string representations of booleans, nulls and numbers* converted to their proper types.
 
 So:
- * `'true'` and `'false'` becomes `true` and `false`
- * `'1'` and `'3.147'` become `1` and `3.147`
- * `'192.168.1.1'` is left alone even though it "looks" like a number
- * `'null'` becomes `null`
+ * `"true"` and `"false"` becomes `true` and `false`
+ * `"1"` and `"3.147"` become `1` and `3.147`
+ * `"192.168.1.1"` is left alone even though it "looks" like a number
+ * `"null"` becomes `null`
 
 It works recursively, so nested structures are no problem.
+
+Array-like strings (currently, only comma-separated values are intepreted like this), are converted too:
+* `"test,one,two,three"` becomes `["test","one","two","three"]` (an array of strings)
+* `"0,1,2,3"` becomes `[0,1,2,3]` (an array of numbers) 
 
 This module was originally inspired by the experience of using a configuration module ([rc](https://www.npmjs.com/package/rc)) and having to check things like `active === false || active === 'false'` repeatedly. I have therefore provided an example of this use case [below](#example-in-rc-config).
 
@@ -32,8 +36,8 @@ const before = {
     active: true,
     anInt: 1,
     aFloat: 1.1,
-    justAString: 'hello',
-    ipAddress: '192.168.1.101'
+    justAString: "hello",
+    ipAddress: "192.168.1.101"
 }
 
 let after = require("parse-strings-in-object")(before);
@@ -46,14 +50,14 @@ The output will be:
     active: true,
     anInt: 1,
     aFloat: 1.1,
-    justAString: 'hello',
-    ipAddress: '192.168.1.101'
+    justAString: "hello",
+    ipAddress: "192.168.1.101"
 }
 number
 and also a
 number
 ```
-Notice that both ints and floats are converted correctly to the single `number` type, and a number-like string such as an IP address is left alone (stays a string).
+Notice that both ints and floats are converted correctly to the single "number" type, and a number-like string such as an IP address is left alone (stays a string).
 
 
 # Example in rc config
@@ -62,7 +66,7 @@ The [rc](https://www.npmjs.com/package/rc) module for configuration loading allo
 The module addresses this nicely. Just wrap the returned config object in a `parse-strings-in-object` require statement. For example:
 ```
 const conf = require('parse-strings-in-object')(require('rc')('myapp', {
-    anOrdinaryString: 'test',
+    anOrdinaryString: "test",
     aBoolean: true,
     aNumber: 9000
 }));
@@ -74,8 +78,8 @@ Now, if you run your app with `--aBoolean=false` or `--aNumber=9001` then you ca
 
 JavaScript is notoriously loose with typing, so this can get you into trouble. For example, you might get configuration or JSON including strings as values:
 ```
-'isMaster': 'true',
-myNumber: '0'
+"isMaster": "true",
+myNumber: "0"
 ```
 So, now:
 ```
