@@ -14,24 +14,47 @@ const convert = (value) => {
             return parseKeys(value);
         }
     }
-    if (value === "true") {
-        result = true;
+    switch (value) {
+        case "true":
+            return true;
+        case "false":
+            return false;
+        case "null":
+            return null;
+        case "undefined":
+            return undefined;
+        default:
+            // other cases
+            if (!isNaN(parseFloat(value)) &&
+                value === parseFloat(value).toString()) {
+                return parseFloat(value);
+            }
+            else {
+                if (isArrayLikeString(value)) {
+                    return convertArrayLikeString(value);
+                }
+                else {
+                    // All else fails, return value as is...
+                    return value;
+                }
+            }
     }
-    if (value === "false") {
-        result = false;
-    }
-    if (value === "null") {
-        result = null;
-    }
-    if (value === "undefined") {
-        result = undefined;
-    }
-    if (!isNaN(parseFloat(value)) &&
-        value === parseFloat(value).toString()) {
-        result = parseFloat(value);
-    }
-    return result;
 };
 const convertArray = (a) => a.map(el => convert(el));
+const isArrayLikeString = (s) => {
+    if (typeof s === "string") {
+        const commaSeparated = s.split(",");
+        if (commaSeparated.length > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+};
+const convertArrayLikeString = (s, token = ",") => convert(s.split(token));
 module.exports = parseKeys;
 //# sourceMappingURL=index.js.map

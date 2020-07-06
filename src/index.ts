@@ -35,7 +35,14 @@ const convert = (value: string | any[]): any => {
       ) {
         return parseFloat(value);
       } else {
-        return value;
+
+        if (isArrayLikeString(value) === true) {
+          return arrayLikeStringToArray(value as string);
+        } else {
+          // All else fails, return value as is...
+          return value;
+        }
+
       }
   }
 
@@ -43,5 +50,21 @@ const convert = (value: string | any[]): any => {
 };
 
 const convertArray = (a: any[]): any[] => a.map(el => convert(el));
+
+const isArrayLikeString = (s: any): boolean => {
+  if (typeof s === "string") {
+    const commaSeparated = s.split(",");
+    if (commaSeparated.length > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  } 
+}
+
+const arrayLikeStringToArray = (s: string, token: string = ",") => 
+  s.split(token);
 
 export = parseKeys;
