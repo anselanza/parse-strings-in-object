@@ -165,3 +165,22 @@ test("parse a nested structure properly", () => {
   expect(result.bar.subSub.thisIsFalse).toEqual(false);
   expect(result.bar.subSub.thisIsNumber).toEqual(0.00006);
 });
+
+describe("convert string representations of an arrays into real arrays", () => {
+  test("array of strings", () => {
+    const before = { list: "test,one,two,three" };
+    const result = parser(before) as { list: string[] };
+    expect(Array.isArray(result.list)).toBeTruthy();
+    expect(typeof result.list).toBe("object");
+    expect(result).toEqual({ list: ["test", "one", "two", "three"]})
+  });
+
+  test("array of numnbers", () => {
+    const before = { list: "0,1,2,4,8" };
+    const result = parser(before) as { list: number[] };
+    expect(Array.isArray(result.list)).toBeTruthy();
+    expect(typeof result.list).toBe("object");
+    expect(result).toEqual({ list: [0,1,2,4,8]})
+  });
+  
+})
