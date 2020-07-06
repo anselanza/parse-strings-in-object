@@ -18,28 +18,26 @@ const convert = (value: string | any[]): any => {
     }
   }
 
-  switch(value) {
-    case "true":
-      return true;
-    case "false":
-      return false;
-    case "null":
-      return null;
-    case "undefined":
-      return undefined;
-    default:
-      // other cases
-      if (
-        !isNaN(parseFloat(value as string)) &&
-        value === parseFloat(value as string).toString()
-      ) {
-        return parseFloat(value);
-      } else {
-        return value;
-      }
+  if (value === "true") {
+    result = true;
+  }
+  if (value === "false") {
+    result = false;
+  }
+  if (value === "null") {
+    result = null;
+  }
+  if (value === "undefined") {
+    result = undefined;
+  }
+  if (
+    !isNaN(parseFloat(value as string)) &&
+    value === parseFloat(value as string).toString()
+  ) {
+    result = parseFloat(value);
   }
 
-  
+  return result;
 };
 
 const convertArray = (a: any[]): any[] => a.map(el => convert(el));
