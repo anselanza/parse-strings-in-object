@@ -14,6 +14,7 @@
   "repository": "https://github.com/anselanza/parse-strings-in-object",
   "main": "dist/index.js",
   "scripts": {
+    "prepare": "npm run clean && npm run build",
     "clean": "shx rm -rf dist",
     "build": "npx tsc && npm run test",
     "test": "npx jest"
