@@ -37,7 +37,7 @@ const convert = (value: string | any[]): any => {
       } else {
 
         if (isArrayLikeString(value) === true) {
-          return arrayLikeStringToArray(value as string);
+          return convertArray(arrayLikeStringToArray(value as string));
         } else {
           // All else fails, return value as is...
           return value;
