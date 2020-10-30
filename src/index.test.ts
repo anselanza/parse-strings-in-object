@@ -43,13 +43,15 @@ test("convert string representations of undefineds into real undefineds", () => 
 });
 
 test("convert string representations of numbers into real numbers", () => {
-  const before = { aNumber: "1", another: "0", andAnother: "42" };
+  const before = { aNumber: "1", another: "0", andAnother: "42", aFloat: "42.4242" };
   const result = parser(before) as typeof before;
   expect(result.aNumber).toBe(1);
   expect(result.andAnother).toBe(42);
+  expect(result.aFloat).toBe(42.4242)
   expect(typeof result.aNumber).toBe("number");
   expect(typeof result.another).toBe("number");
   expect(typeof result.andAnother).toBe("number");
+  expect(typeof result.aFloat).toBe("number");
 });
 
 test("IP addresses should stay as strings though they look like numbers", () => {
