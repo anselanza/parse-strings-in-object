@@ -184,5 +184,21 @@ describe("convert string representations of an arrays into real arrays", () => {
     expect(typeof result.list).toBe("object");
     expect(result).toEqual({ list: [0,1,2,4,8]})
   });
+
+  test("array of paths", () => {
+    const before = { somePaths: "index.ts, ./some-relative-path/some_File.txt, ../../hello.world.txt,one.json,./two.json" };
+    const result = parser(before) as { somePaths: string[] };
+    expect(Array.isArray(result.somePaths)).toBeTruthy();
+    expect(typeof result.somePaths).toBe("object");
+    expect(result.somePaths.length).toEqual(5);
+    expect(result).toEqual({ somePaths: [
+      "index.ts",
+      "./some-relative-path/some_File.txt", 
+      "../../hello.world.txt",
+      "one.json",
+      "./two.json"      
+    ]})
+
+  })
   
 })
