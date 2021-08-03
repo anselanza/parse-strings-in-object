@@ -1,6 +1,6 @@
 {
   "name": "parse-strings-in-object",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Convert string values in object to boolean and numbers",
   "keywords": [
     "json",
@@ -25,10 +25,10 @@
     "@types/jest": "^24.9.1",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
-    "shx": "^0.3.2",
+    "shx": "^0.3.3",
     "ts-jest": "^24.3.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.10"
   }
 }
