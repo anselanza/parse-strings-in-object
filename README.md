@@ -15,6 +15,10 @@ Array-like strings (currently, only comma-separated values are intepreted like t
 * `"test,one,two,three"` becomes `["test","one","two","three"]` (an array of strings)
 * `"0,1,2,3"` becomes `[0,1,2,3]` (an array of numbers) 
 
+Single-element arrays need you to provide a trailing comma to cue the parser appropriately:
+* `"1.1,"` becomes `[1.1]` (single-element array of numbers)
+* `"someString,"` becomes `["someString"]` (single-element array of strings)
+
 This module was originally inspired by the experience of using a configuration module ([rc](https://www.npmjs.com/package/rc)) and having to check things like `active === false || active === 'false'` repeatedly. I have therefore provided an example of this use case [below](#example-in-rc-config).
 
 ## Usage

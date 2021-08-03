@@ -177,6 +177,25 @@ describe("convert string representations of an arrays into real arrays", () => {
     expect(result).toEqual({ list: ["test", "one", "two", "three"]})
   });
 
+  test("single-element array (string)", () => {
+    const before = { list: "one," };
+    const result = parser(before) as { list: string[] };
+    expect(Array.isArray(result.list)).toBeTruthy();
+    expect(typeof result.list).toBe("object");
+    expect(result.list.length).toEqual(1);
+    expect(result).toEqual({ list: ["one"]});
+  })
+
+  test("single-element array (number)", () => {
+    const before = { list: "0.05," };
+    const result = parser(before) as { list: number[] };
+    expect(Array.isArray(result.list)).toBeTruthy();
+    expect(typeof result.list).toBe("object");
+    expect(result.list.length).toEqual(1);
+    expect(result.list[0]).toEqual(0.05);
+    expect(result).toEqual({ list: [0.05]})
+  });
+
   test("array of numnbers", () => {
     const before = { list: "0,1,2,4,8" };
     const result = parser(before) as { list: number[] };

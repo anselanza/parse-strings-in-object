@@ -65,6 +65,6 @@ const isArrayLikeString = (s: any): boolean => {
 }
 
 const arrayLikeStringToArray = (s: string, token: string = ",") => 
-  s.split(token).map(element => element.trim());
+  s.split(token).map(element => element.trim()).filter(element => element !== "" && element !== null);
 
 export = parseKeys;
