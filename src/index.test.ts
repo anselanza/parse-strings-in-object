@@ -43,16 +43,32 @@ test("convert string representations of undefineds into real undefineds", () => 
 });
 
 test("convert string representations of numbers into real numbers", () => {
-  const before = { aNumber: "1", another: "0", andAnother: "42", aFloat: "42.4242" };
+  const before = { aNumber: "1", another: "0", andAnother: "42", aFloat: "42.4242",
+    aNegativeNumber: '-3.1415', aPositiveNumber: '+3.1415'};
   const result = parser(before) as typeof before;
   expect(result.aNumber).toBe(1);
   expect(result.andAnother).toBe(42);
   expect(result.aFloat).toBe(42.4242)
+  expect(result.aNegativeNumber).toBe(-3.1415);
+  expect(result.aPositiveNumber).toBe(3.1415);
   expect(typeof result.aNumber).toBe("number");
   expect(typeof result.another).toBe("number");
   expect(typeof result.andAnother).toBe("number");
   expect(typeof result.aFloat).toBe("number");
+  expect(typeof result.aNegativeNumber).toBe("number");
+  expect(typeof result.aPositiveNumber).toBe("number");
 });
+
+test('conversion does not affect real numbers', () => {
+  const before = { n0: -1.01, n1: -1, n2: 0, n3: 1, n4: 1.01, n5: +100 };
+  const result = parser(before) as typeof before;
+  expect(result.n0).toBe(-1.01);
+  expect(result.n1).toBe(-1);
+  expect(result.n2).toBe(0);
+  expect(result.n3).toBe(1);
+  expect(result.n4).toBe(1.01);
+  expect(result.n5).toBe(100);
+})
 
 test("IP addresses should stay as strings though they look like numbers", () => {
   const before = { aNumber: "192.168", address: "192.168.1.100" };
@@ -88,6 +104,14 @@ test("convert array of objects with string representations of numbers", () => {
       {
         id: "1",
         value: "world"
+      },
+      {
+        id: "-2",
+        value: "<<"
+      },
+      {
+        id: "+2",
+        value: "!>>"
       }
     ]
   };
@@ -102,11 +126,19 @@ test("convert array of objects with string representations of numbers", () => {
       {
         id: 1,
         value: "world"
+      },
+      {
+        id: -2,
+        value: "<<"
+      },
+      {
+        id: 2,
+        value: "!>>"
       }
     ]
   });
   expect(result.foo).toEqual(true);
-  expect(result.someObjs).toHaveLength(2);
+  expect(result.someObjs).toHaveLength(4);
 });
 
 test("parse a nested structure properly", () => {
@@ -121,6 +153,8 @@ test("parse a nested structure properly", () => {
     bar: {
       active: "false",
       number: "10",
+      numberNegative: '-10',
+      numberPositive: '+10',
       aString: "yo",
       somethingNull: null,
       subSub: {
@@ -147,6 +181,8 @@ test("parse a nested structure properly", () => {
     bar: {
       active: false,
       number: 10,
+      numberNegative: -10,
+      numberPositive: 10,
       aString: "yo",
       somethingNull: null,
       subSub: {
@@ -164,6 +200,9 @@ test("parse a nested structure properly", () => {
   expect(result.topLevel).toEqual(true);
   expect(result.foo.active).toEqual(true);
   expect(result.ipAddress).toEqual("192.168.1.101");
+  expect(result.bar.number).toEqual(10);
+  expect(result.bar.numberNegative).toEqual(-10);
+  expect(result.bar.numberPositive).toEqual(10);
   expect(result.bar.subSub.thisIsFalse).toEqual(false);
   expect(result.bar.subSub.thisIsNumber).toEqual(0.00006);
 });
@@ -196,12 +235,22 @@ describe("convert string representations of an arrays into real arrays", () => {
     expect(result).toEqual({ list: [0.05]})
   });
 
-  test("array of numnbers", () => {
-    const before = { list: "0,1,2,4,8" };
+  test("single-element array (positive number)", () => {
+    const before = { list: "+0.05," };
     const result = parser(before) as { list: number[] };
     expect(Array.isArray(result.list)).toBeTruthy();
     expect(typeof result.list).toBe("object");
-    expect(result).toEqual({ list: [0,1,2,4,8]})
+    expect(result.list.length).toEqual(1);
+    expect(result.list[0]).toEqual(0.05);
+    expect(result).toEqual({ list: [0.05]})
+  });
+
+  test("array of numbers", () => {
+    const before = { list: "-1,0,1,2,4,+8" };
+    const result = parser(before) as { list: number[] };
+    expect(Array.isArray(result.list)).toBeTruthy();
+    expect(typeof result.list).toBe("object");
+    expect(result).toEqual({ list: [-1,0,1,2,4,8]})
   });
 
   test("array of paths", () => {

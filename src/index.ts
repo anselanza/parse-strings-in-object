@@ -29,11 +29,8 @@ const convert = (value: string | any[]): any => {
       return undefined;
     default:
       // other cases
-      if (
-        !isNaN(parseFloat(value as string)) &&
-        value === parseFloat(value as string).toString()
-      ) {
-        return parseFloat(value);
+      if (isNumber(value)) {
+        return parseFloat(value as string);
       } else {
 
         if (isArrayLikeString(value) === true) {
@@ -47,6 +44,11 @@ const convert = (value: string | any[]): any => {
   }
 
   return result;
+};
+
+const isNumber = (value: any = ''): boolean => {
+  const val = '' + value;
+  return !isNaN(parseFloat(val)) && val === ((val.startsWith('+') ? '+' : '') + parseFloat(val).toString());
 };
 
 const convertArray = (a: any[]): any[] => a.map(el => convert(el));
