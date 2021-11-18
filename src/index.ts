@@ -8,7 +8,6 @@ const parseKeys = <T>(obj: object): T =>
   }, {}) as T;
 
 const convert = (value: string | any[]): any => {
-  let result: any = value;
 
   if (typeof value === "object" && value !== null) {
     if (Array.isArray(value)) {
@@ -42,8 +41,6 @@ const convert = (value: string | any[]): any => {
 
       }
   }
-
-  return result;
 };
 
 const isNumber = (value: any = ''): boolean => {
@@ -56,11 +53,7 @@ const convertArray = (a: any[]): any[] => a.map(el => convert(el));
 const isArrayLikeString = (s: any): boolean => {
   if (typeof s === "string") {
     const commaSeparated = s.split(",");
-    if (commaSeparated.length > 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return commaSeparated.length > 1;
   } else {
     return false;
   } 
