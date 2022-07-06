@@ -37,7 +37,8 @@ const convert = (value: string | any[]): any => {
       } else {
 
         if (isArrayLikeString(value) === true) {
-          return convertArray(arrayLikeStringToArray(value as string));
+          const valueWithoutBrackets = (value as string).replace("[", "").replace("]", "");
+          return convertArray(arrayLikeStringToArray(valueWithoutBrackets));
         } else {
           // All else fails, return value as is...
           return value;
@@ -54,7 +55,7 @@ const convertArray = (a: any[]): any[] => a.map(el => convert(el));
 const isArrayLikeString = (s: any): boolean => {
   if (typeof s === "string") {
     const commaSeparated = s.split(",");
-    if (commaSeparated.length > 1) {
+    if (commaSeparated.length > 1 || s.includes("[") || s.includes("]")) {
       return true;
     } else {
       return false;
@@ -65,6 +66,6 @@ const isArrayLikeString = (s: any): boolean => {
 }
 
 const arrayLikeStringToArray = (s: string, token: string = ",") => 
-  s.split(token).map(element => element.trim()).filter(element => element !== "" && element !== null);
+  s.split(token).map(element => element.trim());
 
 export = parseKeys;

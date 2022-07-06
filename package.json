@@ -1,6 +1,6 @@
 {
   "name": "parse-strings-in-object",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Convert string values in object to boolean and numbers",
   "keywords": [
     "json",
