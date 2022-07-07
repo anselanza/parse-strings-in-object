@@ -11,7 +11,7 @@ test('convert "true" and "false" to boolean values', () => {
 test("retain actual null values without errors", () => {
   const before = { foo: "true", bar: null };
   const result = parser(before) as typeof before;
-  // expect(result).to.equal({ foo: true, bar: false });
+  expect(result).toEqual({ foo: true, bar: null });
   expect(result.foo).toBe(true);
   expect(result.bar).toBe(null);
 });
@@ -170,7 +170,7 @@ test("parse a nested structure properly", () => {
 
 describe("convert string representations of an arrays into real arrays", () => {
   test("array of strings", () => {
-    const before = { list: "[test,one,two,three]" };
+    const before = { list: '["test","one","two","three"]' };
     const result = parser(before) as { list: string[] };
     expect(Array.isArray(result.list)).toBeTruthy();
     expect(typeof result.list).toBe("object");
@@ -178,11 +178,11 @@ describe("convert string representations of an arrays into real arrays", () => {
   });
 
   test("single-element array (string)", () => {
-    const before = { list: "[one]" };
+    const before = { list: '["one"]' };
     const result = parser(before) as { list: string[] };
-    expect(Array.isArray(result.list)).toBeTruthy();
-    expect(typeof result.list).toBe("object");
-    expect(result.list.length).toEqual(1);
+    // expect(Array.isArray(result.list)).toBeTruthy();
+    // expect(typeof result.list).toBe("object");
+    // expect(result.list.length).toEqual(1);
     expect(result).toEqual({ list: ["one"]});
   })
 
@@ -205,7 +205,7 @@ describe("convert string representations of an arrays into real arrays", () => {
   });
 
   test("array of paths", () => {
-    const before = { "somePaths": "[index.ts, ./some-relative-path/some_File.txt, ../../hello.world.txt,one.json,./two.json]" };
+    const before = { "somePaths": '["index.ts", "./some-relative-path/some_File.txt", "../../hello.world.txt","one.json","./two.json"]' };
     const result = parser(before) as { somePaths: string[] };
     expect(Array.isArray(result.somePaths)).toBeTruthy();
     expect(typeof result.somePaths).toBe("object");
@@ -229,11 +229,49 @@ describe("convert string representations of an arrays into real arrays", () => {
   })
 
   test("array of nulls and other values, nested in object", () =>{
-    const before = { list: '[null,null,null, string, 0, 3]'};
+    const before = { list: '[null,null,null, "string", "0", 3]'};
     const result = parser(before) as { list: any[] };
     expect(result.list).toHaveLength(6);
     expect(result).toEqual({
-      list: [null, null, null, "string", 0, 3]
+      list: [null, null, null, "string", "0", 3]
+    })
+  })
+
+  test("various arrays nested", () => {
+    const before = {
+      one: '["one", "two", "three"]',
+      another: '[0,1,2]',
+      nestedStuff: `{
+        "thisOne": ["single"],
+        "anotherOne": [
+          {
+            "foo": "bar",
+            "hello": 0
+          },
+          {
+            "oh": "yeah",
+            "more": [null, null, null, 101, 102, 103]
+          }
+        ]
+      }`
+    }
+    const result = parser(before);
+    expect(result).toEqual({
+      one: ["one", "two", "three"],
+      another: [0,1,2],
+      nestedStuff: {
+        thisOne: ["single"],
+        anotherOne: [
+          {
+            foo: "bar",
+            hello: 0
+          },
+          {
+            oh: "yeah",
+            more: [null, null, null, 101, 102, 103]
+          }
+        ]
+      }
     })
   })
 

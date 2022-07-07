@@ -8,7 +8,6 @@ const parseKeys = <T>(obj: object): T =>
   }, {}) as T;
 
 const convert = (value: string | any[]): any => {
-  let result: any = value;
 
   if (typeof value === "object" && value !== null) {
     if (Array.isArray(value)) {
@@ -36,36 +35,22 @@ const convert = (value: string | any[]): any => {
         return parseFloat(value);
       } else {
 
-        if (isArrayLikeString(value) === true) {
-          const valueWithoutBrackets = (value as string).replace("[", "").replace("]", "");
-          return convertArray(arrayLikeStringToArray(valueWithoutBrackets));
-        } else {
-          // All else fails, return value as is...
-          return value;
-        }
+       try {
+        return JSON.parse(value as string);
+       }catch(e) {
+        // All else fails, just return the value as-is...
+        // console.warn(`Failed to parse "${value}" (${e})`);
+        return value;
+       }
 
       }
   }
 
-  return result;
 };
 
 const convertArray = (a: any[]): any[] => a.map(el => convert(el));
 
-const isArrayLikeString = (s: any): boolean => {
-  if (typeof s === "string") {
-    const commaSeparated = s.split(",");
-    if (commaSeparated.length > 1 || s.includes("[") || s.includes("]")) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  } 
-}
 
-const arrayLikeStringToArray = (s: string, token: string = ",") => 
-  s.split(token).map(element => element.trim());
+  // s.split(token).map(element => element.trim());
 
 export = parseKeys;
